@@ -1,0 +1,115 @@
+.cs-content-section {
+	min-width: 60vw;
+	min-height: 80vh;
+	margin-left: 31vw;
+	margin-top: -40px;
+	padding-top: 70px;
+	padding-left: 15px;
+}
+.cs-card-detail {
+	width: 55vw;
+	padding: 15px;
+	padding-top: 25px;
+	background-color: #FFFFFF;
+	box-sizing: border-box;
+	border-radius: 4px;
+	display: block;
+	margin-bottom: 40px;
+	box-shadow: 0 0 10px #dfdddd;
+}
+.card-detail-title {
+	font-family: 'Metropolis Bold';
+	font-size: 20px;
+	color: #222222;
+}
+.card-detail-subtitle {
+	font-size: 14px;
+	color: #9B9B9B;
+}
+
+.cs-card-body {
+	margin-top: 35px;
+}
+
+.cs-input-group {
+	margin-bottom: 20px;
+}
+.cs-input-group .cs-input-label {
+	width: 120px;
+	font-size: 14px;
+	color: #9B9B9B;
+	margin-right: 20px;
+	text-align: right;
+}
+.cs-input-group .cs-input-form {
+	width: 22vw;
+}
+.cs-input-group .cs-input-form input[type=text], .cs-input-group .cs-input-form select {
+	width: 22vw;
+	height: 48px;
+	border: 1px solid #9B9B9B;
+	border-radius: 4px;
+	padding-left: 10px;
+	font-size: 14px;
+}
+.cs-input-group .cs-input-form textarea {
+	width: 33vw;
+	height: 40px;
+	border: 1px solid #9B9B9B;
+	border-radius: 4px;
+	padding-left: 10px;
+	font-size: 14px;
+}
+.cs-input-group .cs-input-form .cs-input-radio {
+	margin-right: 30px;
+}
+.cs-input-group .cs-input-form input[type=radio] {
+	width: 18px;
+	height: 18px;
+	border: 1px solid #9B9B9B;
+	margin-right: 10px;
+}
+.cs-input-group .cs-input-form .cs-input-radio span {
+	font-size: 14px;
+	color: #9B9B9B;
+	position: relative;
+	top: -3px;
+}
+.cs-input-group .cs-input-form .cs-input-select {
+	width: 6.5vw;
+	height: 40px;
+	border: 1px solid #9B9B9B;
+	border-radius: 4px;
+	font-size: 14px;
+	margin-right: 10px;
+	color: #9B9B9B;
+}
+.cs-card-save {
+	margin-top: 20px;
+	margin-bottom: 10px;
+	width: 100px;
+	height: 36px;
+	color: #FFFFFF;
+	font-size: 14px;
+	border-radius: 24px;
+	border: 1px solid var(--main-color);
+	background-color: var(--main-color);
+}
+
+.image-side {
+	height: 175px;
+	border-left: 1px solid #D4D4D4;
+}
+.image-side img {
+	border-radius: 50%;
+}
+.image-side-btn {
+	margin-top: 20px;
+	width: 140px;
+	height: 36px;
+	color: #9B9B9B;
+	font-size: 14px;
+	border-radius: 24px;
+	border: 1px solid #9B9B9B;
+	background-color: #FFFFFF;
+}
