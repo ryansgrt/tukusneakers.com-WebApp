@@ -1,101 +1,41 @@
 import React from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import Rater from 'react-rater'
+import 'react-rater/lib/react-rater.css'
 
-import './profile.css'
+import './products.css'
 
-const Profile = () => {
+export default function Products({ title, subtitle, products }) {
 	return (
-		<>
-			<div className="cs-content-section">
-				<div className="cs-card-detail">
-					<Container>
-						<Row className="cs-card-header">
-							<Col>
-								<span className="card-detail-title">My Profile</span>
-								<br/>
-								<span className="card-detail-subtitle">Manage your profile information</span>
-							</Col>
-						</Row>
-						<hr/>
-						<Row className="cs-card-body">
-							<Col xl={8} lg={8} md={8} sm={8} xs={8} className="detail-side">
-								<div className="cs-input-group">
-									<div className="cs-input-label d-inline-block">Name</div>
-									<div className="cs-input-form d-inline-block">
-										<input type="text" placeholder="your name"/>
-									</div>
+		<section className="mt-3">
+				<span className="cs-title">{title}</span>
+				<p className="cs-subtitle">{subtitle}</p>
+				<div className="card-products">
+					
+				{products && products.map((product, index) => {
+					return (
+						<Link to={{ pathname: '/products/' + product.product_id, state: { products: products, id: product.product_id } }}  key={index}>
+							<div className="cs-card" >
+								<div className="cs-head-card" style={{ backgroundImage: `url(${process.env.REACT_APP_API_URL + product.product_images[0].image_path})` }}></div>
+								{/* <img src={process.env.REACT_APP_API_URL + product.product_images[0].image_path} alt="" style={{ height: "250px" }} className="cs-head-card" /> */}
+								{/* <div className="cs-card-head"></div> */}
+								<div className="cs-card-body">
+								<p className="cs-card-title">{product.product_title}</p>
+								<p className="cs-price">IDR {new Intl.NumberFormat().format(product.product_price)}</p>
+									<p className="cs-brand">{product.brand_name}</p>
+									<span>
+										<Rater total={5} rating={product.product_rating == null ? 0 : Math.round(product.product_rating)} interactive={false} />
+										<span className="cs-star-review ml-1">({product.review_user})</span>
+									</span>
 								</div>
-								
-								<div className="cs-input-group">
-									<div className="cs-input-label d-inline-block">Email</div>
-									<div className="cs-input-form d-inline-block">
-										<input type="text" placeholder="example@gmail.com"/>
-									</div>
-								</div>
-								
-								<div className="cs-input-group">
-									<div className="cs-input-label d-inline-block">Phone number</div>
-									<div className="cs-input-form d-inline-block">
-										<input type="text" placeholder="your phone"/>
-									</div>
-								</div>
-								
-								<div className="cs-input-group">
-									<div className="cs-input-label d-inline-block">Gender</div>
-									<div className="cs-input-form d-inline-block">
-										<div className="cs-input-radio d-inline-block">
-											<input type="radio" name="gender" id=""/> 
-											<span>Laki-laki</span>
-										</div>
-										<div className="cs-input-radio d-inline-block">
-											<input type="radio" name="gender" id=""/> 
-											<span>Perempuan</span>
-										</div>
-									</div>
-								</div>
-								
-								<div className="cs-input-group">
-									<div className="cs-input-label d-inline-block">Date of birth</div>
-									<div className="cs-input-form d-inline-block">
-										<select name="tanggal" className="cs-input-select" id="">
-											<option value="">1</option>
-											<option value="">2</option>
-											<option value="">3</option>
-										</select>
-										<select name="tanggal" className="cs-input-select" id="">
-											<option value="">January</option>
-											<option value="">2</option>
-											<option value="">3</option>
-										</select>
-										<select name="tanggal" className="cs-input-select" id="">
-											<option value="">1990</option>
-											<option value="">2</option>
-											<option value="">3</option>
-										</select>
-									</div>
-								</div>
+							</div>
+						</Link>
+					)
+				})}
 
-								<div className="cs-input-group">
-									<div className="cs-input-label d-inline-block"></div>
-									<div className="cs-input-form d-inline-block">
-										<button className="cs-card-save">
-											Save
-										</button>
-									</div>
-								</div>
-								
-							</Col>
-							<Col xl={4} lg={4} md={8} sm={8} xs={8} className="image-side text-center">
-								<img src="https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png" className="" width="110" alt="Profile"/>
-								<br/>
-								<button className="image-side-btn">Select image</button>
-							</Col>
-						</Row>
-					</Container>
-				</div>
+				{/* { (products ? products.length === 0 ? <h1>Data kosong</h1> : <h1>Data ada</h1> : <h1>Data tidak ada</h1>) } */}
+
 			</div>
-		</>
+		</section>
 	)
 }
-
-export default Profile

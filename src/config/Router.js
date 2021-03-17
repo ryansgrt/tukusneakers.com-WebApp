@@ -17,7 +17,7 @@ import Profile from '../pages/MyProfile'
 import Store from '../pages/store/Store'
 import SellProduct from '../pages/store/SellProduct'
 
-import { reduxStore, persistor } from '../redux/store.js'
+import { reduxStore, persistor } from '../redux/store'
 
 export default function Router() {
 	return (

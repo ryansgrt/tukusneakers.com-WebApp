@@ -1,225 +1,309 @@
-import React, { useState } from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
-import { connect } from 'react-redux'
+// import React, { Component } from 'react'
+import React, { useState, useEffect } from "react";
+// import {  useHistory } from 'react-router-dom'
+import { Row, Col } from "react-bootstrap";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import Rater from "react-rater";
+import "react-rater/lib/react-rater.css";
+import { connect } from "react-redux";
+import Products from "../products/products";
 
-import axios from 'axios'
+import "./detail.css";
 
-// import { postProduct } from '../../redux/actionCreators/Product'
+const DetailProduct = ({ dproduct, pproducts, product }) => {
+  // let newProduct = {}
+  const [qty, setQty] = useState(1);
+  // const [color, setColor] = useState(dproduct.length === 0 ? '' : dproduct.product_colors[0].product_color_id )
+  // const products = useHistory().location.state.products
+  const settings = {
+    speed: 500,
+    infinite: false,
+    slidesToShow: 5,
+  };
 
-import './store.css'
+  const minQty = () => {
+    if (qty !== 1) {
+      setQty(qty - 1);
+    }
+  };
 
-const SellProduct = ({ attribute, history }) => {
+  const plusQty = () => setQty(qty + 1);
 
-	const [dataForm, setDataForm] = useState({
-		title: '',
-		price: 0,
-		qty: 0,
-		category: '',
-		brand: '',
-		condition: 'New',
-		desc: '',
-		images: [],
-	})
+  // const getProduct = () => {
 
-	const dataHandler = (e) => {
-		const value = e.target.value
-		setDataForm({
-			...dataForm,
-			[e.target.name]: value
-		})
-	}
-	 
-	const imageHandler = (e) => {
-		const value = e.target.files
+  // }
+  // console.log(product);
 
-		setDataForm({
-			...dataForm,
-			images: value
-		})
-	}
+  // useEffect(() => {
+  //   const user = localStorage.getItem("user");
+  //   if (user) {
+  //     console.log(JSON.parse(user));
+  //     console.log(JSON.parse("Ada"));
+  //   } else {
+  //     console.log(JSON.parse("tidak Ada"));
+  //   }
+  // }, []);
 
-	const myPostProduct = () => {
-		const user = JSON.parse(localStorage.getItem('user'))
-		
-		let formData = new FormData()
+  // const addToBag = () => {
+  // 	const myBag = JSON.parse(localStorage.getItem('bag'))
 
-		formData.append('user_id', user.user_id)
-		formData.append('product_title', dataForm.title)
-		formData.append('brand_id', Number(dataForm.brand))
-		formData.append('category_id', Number(dataForm.category))
-		formData.append('product_price', Number(dataForm.price))
-		formData.append('product_qty', Number(dataForm.qty))
-		formData.append('product_condition', dataForm.condition)
-		formData.append('product_description', dataForm.desc)
-		for (let i = dataForm.images.length - 1; i >= 0; i--) {
-			formData.append('upload_images', dataForm.images[i])
-		}
+  // 	if (color === '') {
+  // 		return alert('Silahkan pilih warna')
+  // 	}
 
-		axios.post(process.env.REACT_APP_API_URL + '/product', formData, {
-			headers: {
-				'Content-Type': 'multipart/form-data',
-				'x-access-token': 'Bearer ' + user.token
-			}
-		})
-		.then((data) => {
-			console.log(data)
-			setDataForm({
-				title: '',
-				price: 0,
-				qty: 0,
-				category: '',
-				brand: '',
-				condition: '',
-				desc: '',
-				images: [],
-			})
-			history.push({
-				pathname: '/store'
-			})
-		})
-		.catch((err) => {
-			console.log(err)
-		})
-	}
+  // 	newProduct = {
+  // 		product_id: dproduct.product_id,
+  // 		product_name: dproduct.product_title,
+  // 		product_brand: dproduct.length === 0 ? '' : dproduct.brand_name,
+  // 		product_color_id: color,
+  // 		product_price: dproduct.length === 0 ? '' : dproduct.product_price,
+  // 		product_image: dproduct.length === 0 ? '' : dproduct.product_images[0].product_attr_value,
+  // 		product_qty: qty
+  // 	}
 
-	return (
-		<>
-			<div className="cs-card-detail">
-				<Container>
-					<Row className="cs-card-header">
-						<Col>
-							<span className="card-detail-title">Inventory</span>
-						</Col>
-					</Row>
-					<hr/>
-					<Row className="cs-card-body">
-						<Col xl={8} lg={8} md={8} sm={12} xs={12}>
-							<div className="cs-input-group">
-								<div className="cs-input-label d-block cs-input-new">Name of goods</div>
-								<div className="cs-input-form d-block">
-									<input type="text" name="title" onChange={dataHandler} />
-								</div>
-							</div>
-						</Col>
-					</Row>
-				</Container>
-			</div>
-			<div className="cs-card-detail">
-				<Container>
-					<Row className="cs-card-header">
-						<Col>
-							<span className="card-detail-title">Item details</span>
-						</Col>
-					</Row>
-					<hr/>
-					<Row className="cs-card-body">
-					<Col xl={8} lg={8} md={8} sm={12} xs={12}>
-							<div className="cs-input-group">
-								<div className="cs-input-label d-block cs-input-new">Category</div>
-								<div className="cs-input-form d-block">
-									<select name="category" id="" onChange={dataHandler}>
-										{attribute.categories.data && attribute.categories.data.map((category, index) => {
-											return <option key={index} value={category.category_id}>{category.category_name}</option>
-										})}
-									</select>
-								</div>
-							</div>
-						</Col>
-						<Col xl={8} lg={8} md={8} sm={12} xs={12}>
-							<div className="cs-input-group">
-								<div className="cs-input-label d-block cs-input-new">Brands</div>
-								<div className="cs-input-form d-block">
-									<select name="brand" id="" onChange={dataHandler}>
-										{attribute.brands.data && attribute.brands.data.map((brand, index) => {
-											return <option key={index} value={brand.brand_id}>{brand.brand_name}</option>
-										})}
-									</select>
-								</div>
-							</div>
-						</Col>
-						<Col xl={8} lg={8} md={8} sm={12} xs={12}>
-							<div className="cs-input-group">
-								<div className="cs-input-label d-block cs-input-new">Unit price</div>
-								<div className="cs-input-form d-block">
-									<input type="text" name="price" placeholder="" onChange={dataHandler}/>
-								</div>
-							</div>
-						</Col>
-						<Col xl={8} lg={8} md={8} sm={12} xs={12}>
-							<div className="cs-input-group">
-								<div className="cs-input-label d-block cs-input-new">Stock</div>
-								<div className="cs-input-form d-block">
-									<input type="text" name="qty" placeholder="" onChange={dataHandler}/>
-								</div>
-							</div>
-						</Col>
-						<Col xl={8} lg={8} md={8} sm={12} xs={12}>
-							<div className="cs-input-group">
-								<div className="cs-input-label d-block cs-input-new">Condition</div>
-								<div className="cs-input-form d-block">
-									{/* <input type="text" placeholder=""/> */}
-									<select name="condition" id="" onChange={dataHandler}>
-										<option value="New">New</option>
-										<option value="Used">Used</option>
-									</select>
-								</div>
-							</div>
-						</Col>
-					</Row>
-				</Container>
-			</div>
-			<div className="cs-card-detail">
-				<Container>
-					<Row className="cs-card-header">
-						<Col>
-							<span className="card-detail-title">Photo of goods</span>
-						</Col>
-					</Row>
-					<hr/>
-					<Row className="cs-card-body">
-						<Col xl={8} lg={8} md={8} sm={12} xs={12}>
-							<div className="cs-input-group">
-								<div className="cs-input-label d-block cs-input-new">Main photo</div>
-								<div className="cs-input-form d-block">
-									<input type="file" onChange={(e) => imageHandler(e)} multiple/>
-								</div>
-							</div>
-						</Col>
-					</Row>
-				</Container>
-			</div>
-			<div className="cs-card-detail">
-				<Container>
-					<Row className="cs-card-header">
-						<Col>
-							<span className="card-detail-title">Description</span>
-						</Col>
-					</Row>
-					<hr/>
-					<Row className="cs-card-body">
-						<Col xl={12} lg={12} md={12} sm={12} xs={12}>
-							<div className="cs-input-group">
-								<div className="cs-input-label d-block cs-input-new">Description of good</div>
-								<div className="cs-input-form d-block">
-									<textarea name="desc" id="" cols="30" rows="30" onChange={dataHandler}></textarea>
-								</div>
-							</div>
-						</Col>
-					</Row>
-				</Container>
-			</div>
-			<div className="cs-btn-submit text-center mb-4" style={{ width: "100px" }} onClick={myPostProduct} >
-					<span>Jual</span>
-				</div>
-		</>
-	)
-}
+  // 	if (myBag) {
+  // 		myBag.push(newProduct)
+  // 		localStorage.setItem('bag', JSON.stringify(myBag))
+  // 	} else {
+  // 		const data = [newProduct]
+  // 		localStorage.setItem('bag', JSON.stringify(data))
+  // 	}
+  // }
 
-const mapsStateToProps = ({ product, attribute }) => {
-	return {
-		product,
-		attribute
-	}
-}
+  // const addColor = (newColor) => setColor(newColor)
 
-export default connect(mapsStateToProps)(SellProduct)
+  // console.log(mprops)
+  // const
+  console.log(product, 73);
+  return (
+    <>
+      <p className="detail-breadcumb mb-4">
+        Home &gt; Category &gt; <b>{dproduct.category_name}</b>
+      </p>
+      <Row>
+        <Col xl={5} lg={5} md={6} sm={12} xs={12}>
+          <Row>
+            <Col className="d-flex">
+              <div
+                className="show-image"
+                style={{
+                  backgroundImage: `url('${
+                    dproduct &&
+                    dproduct.product_images &&
+                    dproduct.product_images.length &&
+                    process.env.REACT_APP_API_URL +
+                      dproduct.product_images[0].image_path
+                  }')`,
+                }}
+              ></div>
+            </Col>
+          </Row>
+          <Row className="mt-1">
+            <div className="images-more">
+              <Slider {...settings}>
+                {dproduct.product_images &&
+                  dproduct.product_images.map((image, index) => {
+                    return (
+                      <div className="image-item" key={index}>
+                        <img
+                          src={process.env.REACT_APP_API_URL + image.image_path}
+                          alt=""
+                        />
+                      </div>
+                    );
+                  })}
+              </Slider>
+            </div>
+          </Row>
+        </Col>
+        <Col xl={7} lg={7} md={6} sm={12} xs={12}>
+          <div className="detail-product d-flex flex-column">
+            <p className="detail-title">{dproduct && dproduct.product_title}</p>
+            <span className="txt-small" id="brand-name">
+              {dproduct.brand_name}
+            </span>
+            <span className="detail-rating">
+              <Rater
+                total={5}
+                rating={
+                  dproduct.product_rating !== null ? dproduct.product_rating : 0
+                }
+                interactive={false}
+              />
+              <span className="people">({dproduct.review_user})</span>
+            </span>
+            <span className="txt-small" id="price-txt">
+              Price
+            </span>
+            <span className="detail-price">
+              IDR {new Intl.NumberFormat().format(dproduct.product_price)}
+            </span>
+            <span className="txt-color">Color</span>
+            <div className="colors d-flex mt-1">
+              {/* {dproduct.product_colors.length && dproduct.product_colors.map((color, index) => {
+								return (
+									<div className="color-item" key={index}>
+										<div style={{ backgroundColor: color.product_attr_value }}></div>
+									</div>
+								)
+							})} */}
+
+              {console.log(dproduct.product_colors && dproduct.product_colors)}
+            </div>
+            <div className="size-qty d-flex">
+              <div className="sizes">
+                <span className="txt-color">Size</span>
+                <div className="size-product d-flex">
+                  <div className="min-btn">
+                    <span>-</span>
+                  </div>
+                  <div className="current-size">
+                    {/* {dproduct.length === 0 ? '' : dproduct.product_sizes[0].product_attr_value.toUpperCase() } */}{" "}
+                    XL
+                  </div>
+                  <div className="plus-btn">
+                    <span>+</span>
+                  </div>
+                </div>
+              </div>
+              <div className="qty-product d-flex">
+                <div className="quantity">
+                  <span className="txt-color">Jumlah</span>
+                  <div className="quantity-product d-flex">
+                    <div className="min-btn" onClick={() => minQty()}>
+                      <span>-</span>
+                    </div>
+                    <div className="current-size">{qty}</div>
+                    <div className="plus-btn" onClick={() => plusQty()}>
+                      <span>+</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <Row className="mt-3">
+              <Col xl={3} lg={3} md={6} sm={6} xs={6}>
+                <div className="btn-detail">
+                  <span>Chat</span>
+                </div>
+              </Col>
+              <Col xl={3} lg={3} md={6} sm={6} xs={6}>
+                <div className="btn-detail">
+                  <span>Add bag</span>
+                </div>
+              </Col>
+              <Col xl={6} lg={6} md={12} sm={12} xs={12}>
+                <div className="btn-detail btn-buy-detail">
+                  <span>Buy Now</span>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col xl={3} lg={3} md={6} sm={6} xs={12}>
+                <div className="btn-detail btn-buy-detail">
+                  <span>Delete</span>
+                </div>
+              </Col>
+            </Row>
+          </div>
+        </Col>
+      </Row>
+      <Row className="mt-4">
+        <Col>
+          <p className="detail-title">Product Information</p>
+          <div className="condition-product d-flex flex-column mt-3">
+            <span className="txt-condition">Condition</span>
+            <span className="txt-condition condition">
+              {dproduct.product_condition}
+            </span>
+          </div>
+          <div className="description-product mt-3">
+            <span className="txt-condition">Description</span>
+            <pre className="desc-text">{dproduct.product_description}</pre>
+          </div>
+          <div className="review-product mt-4">
+            <p className="detail-title mt-4">Product Review</p>
+            <div className="for-rating d-flex mt-4">
+              <div className="box-review">
+                <div className="rating-num">
+                  <span className="big-num">5.0</span>
+                  <span className="small-num">/10</span>
+                </div>
+                <div className="rating-star">
+                  <Rater total={5} rating={2} interactive={false} />
+                </div>
+              </div>
+              <div className="box-people">
+                <div className="count-people d-flex justify-content-between">
+                  <span className="star-num d-flex justify-content-between">
+                    <Rater total={1} rating={1} interactive={false} />
+                    <span>5</span>
+                  </span>
+                  <div className="bar-people"></div>
+                  <span>4</span>
+                </div>
+                <div className="count-people d-flex justify-content-between">
+                  <span className="star-num d-flex justify-content-between">
+                    <Rater total={1} rating={1} interactive={false} />
+                    <span>4</span>
+                  </span>
+                  <div className="bar-people bg-white"></div>
+                  <span>0</span>
+                </div>
+                <div className="count-people d-flex justify-content-between">
+                  <span className="star-num d-flex justify-content-between">
+                    <Rater total={1} rating={1} interactive={false} />
+                    <span>3</span>
+                  </span>
+                  <div className="bar-people bg-white"></div>
+                  <span>0</span>
+                </div>
+                <div className="count-people d-flex justify-content-between">
+                  <span className="star-num d-flex justify-content-between">
+                    <Rater total={1} rating={1} interactive={false} />
+                    <span>2</span>
+                  </span>
+                  <div className="bar-people bg-white"></div>
+                  <span>0</span>
+                </div>
+                <div className="count-people d-flex justify-content-between">
+                  <span className="star-num d-flex justify-content-between">
+                    <Rater total={1} rating={1} interactive={false} />
+                    <span>1</span>
+                  </span>
+                  <div className="bar-people bg-white"></div>
+                  <span>0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <div className="cs-divider"></div>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Products
+            title="You can also like this"
+            subtitle="Popular products this week!"
+            products={product && product.popularProducts.data.products}
+          />
+        </Col>
+      </Row>
+      {/* {console.log(product && product)} */}
+    </>
+  );
+};
+
+const mapsStateToProps = ({ product }) => {
+  return {
+    product,
+  };
+};
+
+export default connect(mapsStateToProps)(DetailProduct);

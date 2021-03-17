@@ -1,115 +1,86 @@
-.cs-content-section {
-	min-width: 60vw;
-	min-height: 80vh;
-	margin-left: 31vw;
-	margin-top: -40px;
-	padding-top: 70px;
-	padding-left: 15px;
+a:hover {
+	text-decoration: none;
 }
-.cs-card-detail {
-	width: 55vw;
-	padding: 15px;
-	padding-top: 25px;
-	background-color: #FFFFFF;
+
+.card-products {
+	max-width: 1140px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 208px);
+	justify-content: space-around;
+}
+
+.cs-card {
+	width: 208px;
+	height: auto;
 	box-sizing: border-box;
-	border-radius: 4px;
-	display: block;
-	margin-bottom: 40px;
-	box-shadow: 0 0 10px #dfdddd;
-}
-.card-detail-title {
-	font-family: 'Metropolis Bold';
-	font-size: 20px;
-	color: #222222;
-}
-.card-detail-subtitle {
-	font-size: 14px;
-	color: #9B9B9B;
-}
-
-.cs-card-body {
-	margin-top: 35px;
-}
-
-.cs-input-group {
+	border-radius: 8px;
+	box-shadow: 0 0 14px rgba(173, 173, 173, 0.25);
+	overflow: hidden;
 	margin-bottom: 20px;
+	margin-right: auto;
+	cursor: pointer;
+	transition: .3s;
 }
-.cs-input-group .cs-input-label {
-	width: 120px;
-	font-size: 14px;
+.cs-card:hover {
+	box-shadow: 0 0 14px rgb(190, 189, 189)
+}
+.cs-card .cs-head-card {
+	/* max-width: 100%; */
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: auto 250px;
+	/* height: auto; */
+	height: 250px;
+	width: auto;
+
+}
+.cs-card .cs-card-body {
+	padding: 10px;
+	margin-top: 0 !important;
+}
+.cs-card .cs-card-title {
+	font-size: 16px;
+	font-weight: bold;
+	color: #000000;
+	margin-bottom: 7px;
+}
+.cs-card .cs-price {
+	font-weight: bold;
+	font-size: 16px;
+	color: var(--main-color);
+	margin-bottom: 4px;
+}
+.cs-card .cs-brand {
+	font-weight: 500;
+	font-size: 12px;
 	color: #9B9B9B;
-	margin-right: 20px;
-	text-align: right;
+	margin-bottom: 0px;
 }
-.cs-input-group .cs-input-form {
-	width: 22vw;
-}
-.cs-input-group .cs-input-form input[type=text], .cs-input-group .cs-input-form select {
-	width: 22vw;
-	height: 48px;
-	border: 1px solid #9B9B9B;
-	border-radius: 4px;
-	padding-left: 10px;
-	font-size: 14px;
-}
-.cs-input-group .cs-input-form textarea {
-	width: 33vw;
-	height: 40px;
-	border: 1px solid #9B9B9B;
-	border-radius: 4px;
-	padding-left: 10px;
-	font-size: 14px;
-}
-.cs-input-group .cs-input-form .cs-input-radio {
-	margin-right: 30px;
-}
-.cs-input-group .cs-input-form input[type=radio] {
-	width: 18px;
-	height: 18px;
-	border: 1px solid #9B9B9B;
-	margin-right: 10px;
-}
-.cs-input-group .cs-input-form .cs-input-radio span {
-	font-size: 14px;
+.cs-card .cs-star-review {
+	font-size: 10px;
 	color: #9B9B9B;
-	position: relative;
-	top: -3px;
-}
-.cs-input-group .cs-input-form .cs-input-select {
-	width: 6.5vw;
-	height: 40px;
-	border: 1px solid #9B9B9B;
-	border-radius: 4px;
-	font-size: 14px;
-	margin-right: 10px;
-	color: #9B9B9B;
-}
-.cs-card-save {
-	margin-top: 20px;
-	margin-bottom: 10px;
-	width: 100px;
-	height: 36px;
-	color: #FFFFFF;
-	font-size: 14px;
-	border-radius: 24px;
-	border: 1px solid var(--main-color);
-	background-color: var(--main-color);
 }
 
-.image-side {
-	height: 175px;
-	border-left: 1px solid #D4D4D4;
+@media screen and (max-width: 450px) {
+	.card-products {
+		grid-template-columns: repeat(auto-fill, 149px);
+	}
+
+	.cs-card {
+		width: 149px;
+	}
 }
-.image-side img {
-	border-radius: 50%;
+
+@media screen and (max-width: 320px) {
+	.card-products {
+		grid-template-columns: repeat(auto-fill, 134px);
+	}
+
+	.cs-card {
+		width: 134px;
+	}
 }
-.image-side-btn {
-	margin-top: 20px;
-	width: 140px;
-	height: 36px;
-	color: #9B9B9B;
-	font-size: 14px;
-	border-radius: 24px;
-	border: 1px solid #9B9B9B;
-	background-color: #FFFFFF;
+
+.react-rater-star.is-active, .react-rater-star.will-be-active  {
+	color: #FFBA49 !important;
 }
